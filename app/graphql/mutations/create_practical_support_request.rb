@@ -1,13 +1,13 @@
 module Mutations
   class CreatePracticalSupportRequest < BaseMutation
-    argument :email, String, null: false
-    argument :name, String, null: false
-    argument :subject, String, null: false
+    argument :email, String, required: true
+    argument :name, String, required: true
+    argument :subject, String, required: true
 
-    type Types::CreatePracticalSupportRequestType
+    type Types::PracticalSupportRequestType
 
     def resolve(email: , name: , subject: )
-      puts("Request: #{email}, #{name}, #{subject}")
+      {email: email, name: name, subject: subject}
     end
   end
 end
