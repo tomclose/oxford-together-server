@@ -8,15 +8,17 @@ module Mutations
 
     def resolve(email: , name: , subject: )
 
-      client = Asana::Client.new do |c|
-        c.authentication :access_token, ENV['ASANA_API_KEY']
-      end
+      if ENV['ASANA_API_KEY']
+        client = Asana::Client.new do |c|
+          c.authentication :access_token, ENV['ASANA_API_KEY']
+        end
 
-      client.tasks.create(
-        projects: ["1167559196211825"],
-        name: subject,
-        notes: "Submitted by: #{name} (#{email})"
-      )
+        client.tasks.create(
+          projects: ["1167559196211825"],
+          name: subject,
+          notes: "Submitted by: #{name} (#{email})"
+        )
+      end
 
 
       {email: email, name: name, subject: subject}
