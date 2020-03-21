@@ -7,6 +7,18 @@ module Mutations
     type Types::PracticalSupportRequestType
 
     def resolve(email: , name: , subject: )
+
+      client = Asana::Client.new do |c|
+        c.authentication :access_token, ENV['ASANA_API_KEY']
+      end
+
+      client.tasks.create(
+        projects: ["1167559196211825"],
+        name: subject,
+        notes: "Submitted by: #{name} (#{email})"
+      )
+
+
       {email: email, name: name, subject: subject}
     end
   end
